@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using NavMeshPlus.Components;
 using UnityEngine;
 
@@ -13,8 +14,9 @@ public class NavMeshSurfaceManagment : MonoBehaviour
         _surface.hideEditorLogs = true;
     }
 
-    public void RebuildNuvMeshSurface()
+    public async Task RebuildNavMeshSurface()
     {
-        _surface.BuildNavMesh();
+        await _surface.BuildNavMeshAsync();
+        //_surface.BuildNavMesh();
     }
 }

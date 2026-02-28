@@ -36,7 +36,8 @@ public class EnemyEntity : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
-        OnTakeDamage?.Invoke(this, EventArgs.Empty);
+        if (_currentHealth > 0)
+            OnTakeDamage?.Invoke(this, EventArgs.Empty);
         DetectDeath();
     }
 

@@ -3,13 +3,23 @@ using UnityEngine;
 public class DestructiblePlant : MonoBehaviour
 {
     public event EventHandler OnDestructiblePlantTakeDamage;
-    private void OnTriggerEnter2D(Collider2D other)
+    private async void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.GetComponent<Sword>())
         {
             Destroy(gameObject);
             OnDestructiblePlantTakeDamage?.Invoke(this, EventArgs.Empty);
-            NavMeshSurfaceManagment.Instance.RebuildNuvMeshSurface();
+            if (NavMeshSurfaceManagment.Instance != null)
+            {
+                try
+                {
+                    await NavMeshSurfaceManagment.Instance.RebuildNavMeshSurface();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Failed to rebuild NavMesh: {e.Message}");
+                }
+            }
         }
     }
 }
